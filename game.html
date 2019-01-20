@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Number guessing Game by MAYUR SHARMA</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+
+<style>
+*{
+ padding:0px;
+ margin:0px;
+ color:white;
+}
+body{
+background-image:url(http://www.jlstms.com/data/wallpapers/188/im57367441.jpg);
+background-repeat:no-repeat;
+background-size:cover;
+}
+.main{
+height:550px;
+width:600px;
+border:2px solid rgb(255, 93, 0);
+border-radius:25px;
+box-shadow:0px 0px 20px 5px red;
+position:absolute;
+top:50px;
+left:600px;
+padding:20px;
+}
+.wrapper{
+height:995;
+width:100%;
+border:1px dashed white;
+border-radius:25px;
+padding:10px;
+}
+.head1{
+font-size:35px;
+font-family:Arial black;
+letter-spacing:3px;
+text-shadow:2px 2px 20px red;
+color:black;
+}
+hr.hr1{
+border:1px dashed white;
+width:100%;
+
+}
+.n1{
+color:red;
+font-weight:Bold;
+}
+
+ .lastResult {
+        background-color: red;
+      color: white;
+      padding: 3px;
+    }
+.guessSubmit{
+color:black;
+}
+.form{
+text-align:center;
+}	
+input[type=text]{
+color:black;
+border:0px solid;
+background-color:red;
+padding:30px;
+font-weight:bold;
+text-align:center;
+font-size:30px;
+font-family:tahoma;
+border-radius:25px;
+height:50px;
+width:250px;
+margin-top:5px;
+box-shadow:0px 0px 20px 5px red;
+}
+input[type=submit]{
+color:red;
+border-radius:25px;
+height:50px;
+max-width:350px;
+font-weight:bold;
+margin-top:15px;
+}
+.lab1{
+font-size:30px;
+}
+input:focus {
+    outline:none;
+	
+}
+</style>
+</head>
+<body>
+<div class="main">
+<div class="wrapper">
+<p class="text-center head1">Guss the Number</p>
+<hr class="hr1">
+<p></p>
+<p class="text-white text-center"><span class="n1">Rule :</span> We have selected a random number between 1 and 100. See if you can guess it in 10 turns or fewer. We'll tell you
+        if your
+        guess was too high or too low.</p>
+		
+		<!--form and script start from here.. -->
+		<div class="form">
+        <label for="guessField" class="lab1">Enter a guess: </label><br>
+        <input type="text" id="guessField" class="guessField" autofocus><br>
+        <input type="submit" value="Check your guess" class="guessSubmit">
+    </div>
+
+    <div class="resultParas">
+        <p class="guesses"></p>
+        <p class="lastResult"></p>
+        <p class="lowOrHi"></p>
+    </div>
+    <script>
+        var randomNumber = Math.floor(Math.random() * 100 + 1);
+        var lastresult = document.querySelector('.lastResult');
+        var lowOrHi = document.querySelector('.lowOrHi');
+        var guesses = document.querySelector('.guesses')
+        var userInput = document.querySelector('input[type=text]');
+        var sbtn = document.querySelector('input[type = submit]');
+        // console.log(lastresult);
+        // console.log(lowOrHi);
+        // console.log(guesses);
+        // console.log(userInput);
+        // console.log(sbtn);
+        // guesses.innerText = 'previous guesses'
+
+        var counter = 1;
+        // var imp = parseInt(userInput.value);
+
+
+        function playGame(e) {
+            e.preventDefault();
+            var imp = parseInt(userInput.value);
+            if (counter == 1) {
+                guesses.innerText = 'previous guesses: ';
+
+            }
+            guesses.innerText += ' ' + imp;
+
+            if (imp == randomNumber) {
+                lastresult.innerText = 'Yeah you got it- Congratulations';
+                lowOrHi.innerText = '';
+                setGameOver();
+            } else if (counter == 10) {
+                guesses.innerText = '';
+                lowOrHi.innerText = '';
+                lastresult.innerText = 'Gameover';
+                setGameOver();
+            }
+            else {
+                if (imp > randomNumber) {
+                    lastresult.innerText = 'Wrong';
+                    lowOrHi.innerText = 'Guess is too high'
+                } else {
+                    lastresult.innerText = 'Wrong';
+                    lowOrHi.innerText = 'Guess is too low'
+                }
+            }
+            counter++;
+            userInput.value = '';
+            userInput.focus();
+        }
+
+
+        function resetGame() {
+            userInput.disabled = false;
+            sbtn.disabled = false;
+
+            var randomNumber = Math.floor(Math.random() * 100 + 1);
+            counter = 1;
+            guesses.innerText = '';
+            lowOrHi.innerText = '';
+            lastresult.innerText = '';
+            userInput.value = '';
+            userInput.focus();
+
+            if (resetbtn.style.display === 'none') {
+                resetbtn.style.display = 'block';
+				resetbtn.style.color = 'red';
+            } else {
+                resetbtn.style.display = 'none';
+            }
+
+        }
+        var resetbtn;
+        function setGameOver() {
+            userInput.disabled = true;
+            sbtn.disabled = true;
+
+            resetbtn = document.createElement('button');
+            resetbtn.innerText = 'Play Game';
+            document.body.appendChild(resetbtn);
+            resetbtn.addEventListener('click', resetGame)
+
+        }
+
+        sbtn.addEventListener('click', playGame)
+
+
+
+    </script>
+		
+		
+		
+</div>
+</div>
+
+<!-- bootstrapcdn link is here -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>
